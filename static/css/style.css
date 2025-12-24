@@ -3,11 +3,11 @@
 
 :root {
     --bg-dark: #0f0f13;
-    --card-bg: rgba(255, 255, 255, 0.05); /* Efek Kaca */
-    --accent: #6c5ce7; /* Ungu Neon */
-    --accent-hover: #a29bfe;
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --accent: #e75c5c;
+    --accent-hover: #fe9b9b;
     --text-main: #ffffff;
-    --danger: #ff7675;
+    --danger: #ff2424;
     --success: #00b894;
     --warning: #fdcb6e;
     --info: #74b9ff;
@@ -20,7 +20,7 @@ body {
     overflow-x: hidden;
 }
 
-/* Navbar Mewah */
+
 .navbar {
     background: rgba(15, 15, 19, 0.95);
     backdrop-filter: blur(10px);
@@ -34,7 +34,6 @@ body {
 }
 .navbar-brand span { color: var(--accent); }
 
-/* Card Glassmorphism */
 .card-custom {
     background: var(--card-bg);
     color: var(--text-main);
@@ -49,7 +48,6 @@ body {
     box-shadow: 0 0 20px rgba(108, 92, 231, 0.2);
 }
 
-/* Tombol Gradient */
 .btn-primary {
     background: linear-gradient(45deg, var(--accent), #a29bfe);
     border: none;
@@ -64,8 +62,8 @@ body {
 }
 
 .btn-outline-primary {
-    border: 2px solid var(--accent);
-    color: var(--accent);
+    border: 2px solid var(--info);
+    color: var(--info);
     background: transparent;
 }
 .btn-outline-primary:hover {
@@ -73,7 +71,6 @@ body {
     color: white;
 }
 
-/* Table Dark */
 .table-dark-custom {
     color: var(--text-muted);
     background-color: transparent;
@@ -83,7 +80,6 @@ body {
     border-bottom: 2px solid var(--accent);
 }
 
-/* Event Cards */
 .event-card {
     height: 100%;
     transition: all 0.3s ease;
@@ -125,7 +121,6 @@ body {
     margin-bottom: 1rem;
 }
 
-/* Form Styling */
 .form-control, .form-select {
     background-color: rgba(255, 255, 255, 0.07);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -141,14 +136,12 @@ body {
     color: var(--text-main);
 }
 
-/* Alert Styling */
 .alert {
     border-radius: 10px;
     backdrop-filter: blur(5px);
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Footer */
 footer {
     background: rgba(15, 15, 19, 0.95);
     backdrop-filter: blur(10px);
@@ -156,7 +149,6 @@ footer {
     margin-top: 3rem;
 }
 
-/* Dashboard Cards */
 .dashboard-card {
     background: var(--card-bg);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -184,7 +176,6 @@ footer {
     color: var(--text-muted);
 }
 
-/* Responsive */
 @media (max-width: 768px) {
     .navbar-brand {
         font-size: 1.2rem;

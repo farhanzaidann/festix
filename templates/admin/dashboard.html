@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 
-{% block title %}Admin Dashboard - NeoTix{% endblock %}
+{% block title %}Admin Dashboard - FesTix{% endblock %}
 
 {% block content %}
 <div class="container">
@@ -8,19 +8,19 @@
     
     <!-- Stats Cards -->
     <div class="row mb-4">
-        <div class="col-md-4">
+        <div class="col-md-4 mb-2">
             <div class="dashboard-card">
                 <h3 class="card-title">{{ total_penjualan or 0 }}</h3>
                 <p class="card-text">Total Penjualan</p>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 mb-2">
             <div class="dashboard-card">
                 <h3 class="card-title">{{ total_tiket or 0 }}</h3>
                 <p class="card-text">Tiket Terjual</p>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 mb-2">
             <div class="dashboard-card">
                 <h3 class="card-title">{{ events|length }}</h3>
                 <p class="card-text">Total Event</p>

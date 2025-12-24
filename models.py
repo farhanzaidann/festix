@@ -7,7 +7,7 @@ def get_db_connection():
         host='localhost',
         user='root',
         password='',
-        database='neotix_db',
+        database='FesTix_db',
         cursorclass=pymysql.cursors.DictCursor
     )
 
