@@ -1,0 +1,105 @@
+{% extends "layout.html" %}
+
+{% block title %}Admin Dashboard - NeoTix{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-white mb-4">Dashboard Admin</h1>
+    
+    <!-- Stats Cards -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="dashboard-card">
+                <h3 class="card-title">{{ total_penjualan or 0 }}</h3>
+                <p class="card-text">Total Penjualan</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="dashboard-card">
+                <h3 class="card-title">{{ total_tiket or 0 }}</h3>
+                <p class="card-text">Tiket Terjual</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="dashboard-card">
+                <h3 class="card-title">{{ events|length }}</h3>
+                <p class="card-text">Total Event</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card card-custom mb-4">
+                <div class="card-header">
+                    <h5 class="text-white">Event Management</h5>
+                    <a href="{{ url_for('tambah_event') }}" class="btn btn-primary float-end">Tambah Event</a>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-dark">
+                            <thead>
+                                <tr>
+                                    <th>Nama Event</th>
+                                    <th>Tanggal</th>
+                                    <th>Lokasi</th>
+                                    <th>Harga</th>
+                                    <th>Stok</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for event in events %}
+                                <tr>
+                                    <td>{{ event.nama_event }}</td>
+                                    <td>{{ event.tanggal }}</td>
+                                    <td>{{ event.lokasi }}</td>
+                                    <td>Rp {{ "{:,.2f}".format(event.harga) }}</td>
+                                    <td>{{ event.stok }}</td>
+                                    <td>
+                                        <a href="{{ url_for('edit_event', event_id=event.id) }}" class="btn btn-sm btn-outline-primary mb-2">Edit</a>
+                                        <a href="{{ url_for('hapus_event', event_id=event.id) }}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Yakin ingin menghapus event ini?')">Hapus</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card card-custom mb-4">
+                <div class="card-header">
+                    <h5 class="text-white">Transaksi Terbaru</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-dark">
+                            <thead>
+                                <tr>
+                                    <th>User</th>
+                                    <th>Event</th>
+                                    <th>Jumlah Tiket</th>
+                                    <th>Total Bayar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for trans in transaksi %}
+                                <tr>
+                                    <td>{{ trans.nama_lengkap }}</td>
+                                    <td>{{ trans.nama_event }}</td>
+                                    <td>{{ trans.jumlah_tiket }}</td>
+                                    <td>Rp {{ "{:,.2f}".format(trans.total_bayar) }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

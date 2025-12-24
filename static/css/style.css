@@ -1,0 +1,201 @@
+/* Import Font Modern */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap');
+
+:root {
+    --bg-dark: #0f0f13;
+    --card-bg: rgba(255, 255, 255, 0.05); /* Efek Kaca */
+    --accent: #6c5ce7; /* Ungu Neon */
+    --accent-hover: #a29bfe;
+    --text-main: #ffffff;
+    --danger: #ff7675;
+    --success: #00b894;
+    --warning: #fdcb6e;
+    --info: #74b9ff;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: 'Outfit', sans-serif;
+    overflow-x: hidden;
+}
+
+/* Navbar Mewah */
+.navbar {
+    background: rgba(15, 15, 19, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--text-main) !important;
+    letter-spacing: 1px;
+}
+.navbar-brand span { color: var(--accent); }
+
+/* Card Glassmorphism */
+.card-custom {
+    background: var(--card-bg);
+    color: var(--text-main);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    backdrop-filter: blur(5px);
+    transition: transform 0.3s ease;
+}
+.card-custom:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent);
+    box-shadow: 0 0 20px rgba(108, 92, 231, 0.2);
+}
+
+/* Tombol Gradient */
+.btn-primary {
+    background: linear-gradient(45deg, var(--accent), #a29bfe);
+    border: none;
+    font-weight: 500;
+    padding: 10px 25px;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+}
+.btn-primary:hover {
+    box-shadow: 0 0 15px var(--accent);
+    transform: scale(1.05);
+}
+
+.btn-outline-primary {
+    border: 2px solid var(--accent);
+    color: var(--accent);
+    background: transparent;
+}
+.btn-outline-primary:hover {
+    background: var(--accent);
+    color: white;
+}
+
+/* Table Dark */
+.table-dark-custom {
+    color: var(--text-muted);
+    background-color: transparent;
+}
+.table-dark-custom th {
+    color: var(--text-main);
+    border-bottom: 2px solid var(--accent);
+}
+
+/* Event Cards */
+.event-card {
+    height: 100%;
+    transition: all 0.3s ease;
+}
+
+.event-card img {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.event-card .card-body {
+    padding: 1.5rem;
+}
+
+.event-card .event-title {
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.event-card .event-date {
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.event-card .event-location {
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+}
+
+.event-card .event-price {
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--success);
+    margin-bottom: 1rem;
+}
+
+/* Form Styling */
+.form-control, .form-select {
+    background-color: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-main);
+    padding: 10px 15px;
+    border-radius: 8px;
+}
+
+.form-control:focus, .form-select:focus {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 0.25rem rgba(108, 92, 231, 0.25);
+    color: var(--text-main);
+}
+
+/* Alert Styling */
+.alert {
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Footer */
+footer {
+    background: rgba(15, 15, 19, 0.95);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 3rem;
+}
+
+/* Dashboard Cards */
+.dashboard-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent);
+    box-shadow: 0 0 20px rgba(108, 92, 231, 0.2);
+}
+
+.dashboard-card .card-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+}
+
+.dashboard-card .card-text {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .navbar-brand {
+        font-size: 1.2rem;
+    }
+    
+    .btn-primary {
+        padding: 8px 20px;
+        font-size: 0.9rem;
+    }
+    
+    .event-card {
+        margin-bottom: 1.5rem;
+    }
+}

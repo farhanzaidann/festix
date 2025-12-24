@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block title %}Register - NeoTix{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card card-custom p-4">
+            <div class="text-center mb-4">
+                <h2 class="text-white">Register</h2>
+                <p class="text-white">Buat akun baru</p>
+            </div>
+            
+            <form method="POST" action="{{ url_for('register') }}">
+                <div class="mb-3">
+                    <label for="nama" class="form-label text-white">Nama Lengkap</label>
+                    <input type="text" class="form-control" id="nama" name="nama" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label text-white">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label text-white">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </div>
+            </form>
+            
+            <div class="text-center mt-3">
+                <p class="text-white">Sudah punya akun? <a href="{{ url_for('login') }}" class="text-primary">Login di sini</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

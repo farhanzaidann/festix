@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+
+{% block title %}NeoTix - Home{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-white mb-4">Event Tersedia</h1>
+    
+    {% if events %}
+        <div class="row">
+            {% for event in events %}
+            <div class="col-md-4 mb-4">
+                <div class="card card-custom event-card">
+                    {% if event.gambar %}
+                        <img src="{{ url_for('static', filename='img/' + event.gambar) }}" class="card-img-top" alt="{{ event.nama_event }}" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x200';">
+                    {% else %}
+                        <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="{{ event.nama_event }}">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title event-title text-white">{{ event.nama_event }}</h5>
+                        <p class="event-date">{{ event.tanggal.strftime('%d %B %Y') if event.tanggal else event.tanggal }}</p>
+                        <p class="event-location">{{ event.lokasi }}</p>
+                        <p class="event-price">Rp {{ "{:,.2f}".format(event.harga) }}</p>
+                        <p class="text-white">Stok: {{ event.stok }}</p>
+                        <p class="card-text">{{ event.deskripsi[:100] }}{% if event.deskripsi|length > 100 %}...{% endif %}</p>
+
+                        <div class="mt-3">
+                            <a href="{{ url_for('event_detail', event_id=event.id) }}" class="btn btn-outline-light w-100 mb-2">Detail Event</a>
+
+                            {% if session.user_id and session.role != 'admin' %}
+                                <form method="POST" action="{{ url_for('beli_tiket', event_id=event.id) }}" class="mt-2">
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <input type="number" class="form-control" name="jumlah" min="1" max="{{ event.stok }}" value="1" required>
+                                        </div>
+                                        <div class="col-4">
+                                            <button type="submit" class="btn btn-primary w-100">Beli</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            {% elif session.role == 'admin' %}
+                                <div class="alert alert-warning mt-2">Admin tidak dapat membeli tiket</div>
+                            {% else %}
+                                <a href="{{ url_for('login') }}" class="btn btn-primary w-100 mt-2">Login untuk Beli</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="text-center">
+            <p class="text-muted">Belum ada event tersedia.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

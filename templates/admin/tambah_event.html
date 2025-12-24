@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+
+{% block title %}Tambah Event - NeoTix{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-white mb-4">Tambah Event Baru</h1>
+    
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card card-custom p-4">
+                <form method="POST" action="{{ url_for('tambah_event') }}">
+                    <div class="mb-3">
+                        <label for="nama" class="form-label text-white">Nama Event</label>
+                        <input type="text" class="form-control" id="nama" name="nama" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="tanggal" class="form-label text-white">Tanggal</label>
+                        <input type="date" class="form-control" id="tanggal" name="tanggal" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="lokasi" class="form-label text-white">Lokasi</label>
+                        <input type="text" class="form-control" id="lokasi" name="lokasi" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="harga" class="form-label text-white">Harga</label>
+                        <input type="number" class="form-control" id="harga" name="harga" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="stok" class="form-label text-white">Stok</label>
+                        <input type="number" class="form-control" id="stok" name="stok" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="deskripsi" class="form-label text-white">Deskripsi</label>
+                        <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="gambar" class="form-label text-white">Gambar (URL)</label>
+                        <input type="text" class="form-control" id="gambar" name="gambar">
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Simpan Event</button>
+                    </div>
+                </form>
+                
+                <div class="mt-3">
+                    <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline-primary">Kembali ke Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
