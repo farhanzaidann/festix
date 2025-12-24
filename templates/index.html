@@ -5,7 +5,29 @@
 {% block content %}
 <div class="container">
     <h1 class="text-white mb-4">Event Tersedia</h1>
-    
+
+    <!-- Search Form -->
+    <div class="row mb-4">
+        <div class="col-md-8 offset-md-2">
+            <form method="GET" action="{{ url_for('index') }}" class="d-flex">
+                <input type="text" class="form-control" name="search" placeholder="Cari event berdasarkan nama..." value="{{ search_query or '' }}">
+                <button type="submit" class="btn btn-primary ms-2">Cari</button>
+                {% if search_query %}
+                    <a href="{{ url_for('index') }}" class="btn btn-secondary ms-2">Clear</a>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+
+    <!-- Search Results Info -->
+    {% if search_query %}
+        <div class="row mb-3">
+            <div class="col-12">
+                <p class="text-white">Menampilkan hasil pencarian untuk: <strong>{{ search_query }}</strong> ({{ events|length }} hasil ditemukan)</p>
+            </div>
+        </div>
+    {% endif %}
+
     {% if events %}
         <div class="row">
             {% for event in events %}

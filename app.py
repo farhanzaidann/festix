@@ -74,8 +74,12 @@ def logout():
 # --- ROUTES UTAMA ---
 @app.route('/')
 def index():
-    events = Event.get_all()
-    return render_template('index.html', events=events)
+    search_query = request.args.get('search', '')
+    if search_query:
+        events = Event.search_by_nama_event(search_query)
+    else:
+        events = Event.get_all()
+    return render_template('index.html', events=events, search_query=search_query)
 
 @app.route('/event/<int:event_id>')
 def event_detail(event_id):

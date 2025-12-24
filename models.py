@@ -230,6 +230,31 @@ class Event:
         finally:
             conn.close()
 
+    @staticmethod
+    def search_by_nama_event(search_query):
+        """Search events by nama_event"""
+        conn = get_db_connection()
+        try:
+            with conn.cursor() as cursor:
+                sql = "SELECT * FROM events WHERE nama_event LIKE %s"
+                cursor.execute(sql, (f'%{search_query}%',))
+                events_data = cursor.fetchall()
+                events = []
+                for event_data in events_data:
+                    events.append(Event(
+                        id=event_data['id'],
+                        nama_event=event_data['nama_event'],
+                        tanggal=event_data['tanggal'],
+                        lokasi=event_data['lokasi'],
+                        harga=event_data['harga'],
+                        stok=event_data['stok'],
+                        deskripsi=event_data['deskripsi'],
+                        gambar=event_data['gambar']
+                    ))
+                return events
+        finally:
+            conn.close()
+
 
 class Transaction:
     def __init__(self, id=None, user_id=None, event_id=None, jumlah_tiket=None, total_bayar=None, nama_pemesan=None, email_pemesan=None, no_telepon=None, catatan=None, tanggal_transaksi=None):
