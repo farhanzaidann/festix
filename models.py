@@ -67,6 +67,27 @@ class User:
         return None
 
     @staticmethod
+    def get_by_id(user_id):
+        """Get a user by ID"""
+        conn = get_db_connection()
+        try:
+            with conn.cursor() as cursor:
+                cursor.execute("SELECT * FROM users WHERE id = %s", (user_id,))
+                user_data = cursor.fetchone()
+                if user_data:
+                    return User(
+                        id=user_data['id'],
+                        nama_lengkap=user_data['nama_lengkap'],
+                        email=user_data['email'],
+                        password=user_data['password'],
+                        role=user_data['role'],
+                        created_at=user_data['created_at']
+                    )
+                return None
+        finally:
+            conn.close()
+
+    @staticmethod
     def get_all():
         """Get all users (for admin purposes)"""
         conn = get_db_connection()
@@ -211,29 +232,57 @@ class Event:
 
 
 class Transaction:
-    def __init__(self, id=None, user_id=None, event_id=None, jumlah_tiket=None, total_bayar=None, tanggal_transaksi=None):
+    def __init__(self, id=None, user_id=None, event_id=None, jumlah_tiket=None, total_bayar=None, nama_pemesan=None, email_pemesan=None, no_telepon=None, catatan=None, tanggal_transaksi=None):
         self.id = id
         self.user_id = user_id
         self.event_id = event_id
         self.jumlah_tiket = jumlah_tiket
         self.total_bayar = total_bayar
+        self.nama_pemesan = nama_pemesan
+        self.email_pemesan = email_pemesan
+        self.no_telepon = no_telepon
+        self.catatan = catatan
         self.tanggal_transaksi = tanggal_transaksi
 
     @staticmethod
     def create(user_id, event_id, jumlah_tiket, total_bayar):
-        """Create a new transaction"""
+        """Create a new transaction (for backward compatibility)"""
         conn = get_db_connection()
         try:
             with conn.cursor() as cursor:
                 sql = """
-                    INSERT INTO transactions (user_id, event_id, jumlah_tiket, total_bayar)
-                    VALUES (%s, %s, %s, %s)
+                    INSERT INTO transactions (user_id, event_id, jumlah_tiket, total_bayar, nama_pemesan, email_pemesan, no_telepon)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s)
                 """
-                cursor.execute(sql, (user_id, event_id, jumlah_tiket, total_bayar))
+                # Using user's name and email as default for the order
+                from flask import session
+                # We'll get user details from the database
+                user = User.get_by_id(user_id)
+                print(user)
+                cursor.execute(sql, (user_id, event_id, jumlah_tiket, total_bayar, user.nama_lengkap, user.email, ''))
             conn.commit()
             return True
         except Exception as e:
             print(f"Error creating transaction: {e}")
+            return False
+        finally:
+            conn.close()
+
+    @staticmethod
+    def create_with_details(user_id, event_id, jumlah_tiket, total_bayar, nama_pemesan, email_pemesan, no_telepon, catatan=''):
+        """Create a new transaction with detailed order information"""
+        conn = get_db_connection()
+        try:
+            with conn.cursor() as cursor:
+                sql = """
+                    INSERT INTO transactions (user_id, event_id, jumlah_tiket, total_bayar, nama_pemesan, email_pemesan, no_telepon, catatan)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                """
+                cursor.execute(sql, (user_id, event_id, jumlah_tiket, total_bayar, nama_pemesan, email_pemesan, no_telepon, catatan))
+            conn.commit()
+            return True
+        except Exception as e:
+            print(f"Error creating transaction with details: {e}")
             return False
         finally:
             conn.close()
@@ -260,6 +309,10 @@ class Transaction:
                         'event_id': trans_data['event_id'],
                         'jumlah_tiket': trans_data['jumlah_tiket'],
                         'total_bayar': trans_data['total_bayar'],
+                        'nama_pemesan': trans_data['nama_pemesan'],
+                        'email_pemesan': trans_data['email_pemesan'],
+                        'no_telepon': trans_data['no_telepon'],
+                        'catatan': trans_data['catatan'],
                         'tanggal_transaksi': trans_data['tanggal_transaksi'],
                         'nama_event': trans_data['nama_event'],
                         'tanggal': trans_data['tanggal'],

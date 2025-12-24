@@ -5,34 +5,37 @@
 {% block content %}
 <div class="container">
     <h1 class="text-white mb-4">Tiket Saya</h1>
-    
+
     {% if tiket %}
-        <div class="table-responsive">
-            <table class="table table-striped table-dark">
-                <thead>
-                    <tr>
-                        <th>Event</th>
-                        <th>Tanggal</th>
-                        <th>Lokasi</th>
-                        <th>Jumlah Tiket</th>
-                        <th>Total Bayar</th>
-                        <th>Tanggal Transaksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for t in tiket %}
-                    <tr>
-                        <td>{{ t.nama_event }}</td>
-                        <td>{{ t.tanggal.strftime('%d %B %Y') if t.tanggal else t.tanggal }}</td>
-                        <td>{{ t.lokasi }}</td>
-                        <td>{{ t.jumlah_tiket }}</td>
-                        <td>Rp {{ "{:,.2f}".format(t.total_bayar) }}</td>
-                        <td>{{ t.tanggal_transaksi.strftime('%d %B %Y %H:%M') if t.tanggal_transaksi else t.tanggal_transaksi }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+        {% for t in tiket %}
+        <div class="card card-custom mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="text-white mb-0">{{ t.nama_event }}</h5>
+                <span class="badge bg-primary">ID: {{ t.id }}</span>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Detail Event</h6>
+                        <p class="mb-1"><strong>Tanggal:</strong> {{ t.tanggal.strftime('%d %B %Y') if t.tanggal else t.tanggal }}</p>
+                        <p class="mb-1"><strong>Lokasi:</strong> {{ t.lokasi }}</p>
+                        <p class="mb-1"><strong>Jumlah Tiket:</strong> {{ t.jumlah_tiket }}</p>
+                        <p class="mb-1"><strong>Total Bayar:</strong> Rp {{ "{:,.2f}".format(t.total_bayar) }}</p>
+                        <p class="mb-1"><strong>Tanggal Transaksi:</strong> {{ t.tanggal_transaksi.strftime('%d %B %Y %H:%M') if t.tanggal_transaksi else t.tanggal_transaksi }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Detail Pemesan</h6>
+                        <p class="mb-1"><strong>Nama:</strong> {{ t.nama_pemesan }}</p>
+                        <p class="mb-1"><strong>Email:</strong> {{ t.email_pemesan }}</p>
+                        <p class="mb-1"><strong>No. Telepon:</strong> {{ t.no_telepon }}</p>
+                        {% if t.catatan %}
+                        <p class="mb-1"><strong>Catatan:</strong> {{ t.catatan }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
         </div>
+        {% endfor %}
     {% else %}
         <div class="text-center">
             <p class="text-white">Anda belum memiliki tiket apapun.</p>

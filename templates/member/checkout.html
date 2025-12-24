@@ -1,0 +1,82 @@
+{% extends "layout.html" %}
+
+{% block title %}Checkout - NeoTix{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card card-custom">
+                <div class="card-header">
+                    <h3 class="text-white">Checkout Tiket</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <h5>Detail Event</h5>
+                            <p class="mb-1"><strong>{{ event.nama_event }}</strong></p>
+                            <p class="mb-1">Tanggal: {{ event.tanggal.strftime('%d %B %Y') if event.tanggal else event.tanggal }}</p>
+                            <p class="mb-1">Lokasi: {{ event.lokasi }}</p>
+                            <p class="mb-1">Harga: Rp {{ "{:,.2f}".format(event.harga) }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Ringkasan Pesanan</h5>
+                            <p class="mb-1">Jumlah Tiket: {{ jumlah_tiket }}</p>
+                            <p class="mb-1">Total Harga: Rp {{ "{:,.2f}".format(total_harga) }}</p>
+                        </div>
+                    </div>
+
+                    <form method="POST" action="{{ url_for('proses_checkout', event_id=event.id) }}">
+                        <h5>Informasi Pemesan</h5>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="nama_pemesan" class="form-label text-white">Nama Lengkap</label>
+                                <input type="text" class="form-control" id="nama_pemesan" name="nama_pemesan" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="email_pemesan" class="form-label text-white">Email</label>
+                                <input type="email" class="form-control" id="email_pemesan" name="email_pemesan" required>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="no_telepon" class="form-label text-white">No. Telepon</label>
+                                <input type="text" class="form-control" id="no_telepon" name="no_telepon" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="jumlah_tiket" class="form-label text-white">Jumlah Tiket</label>
+                                <input type="number" class="form-control" id="jumlah_tiket_input" name="jumlah_tiket" min="1" max="{{ event.stok }}" value="{{ jumlah_tiket }}" required>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label for="catatan" class="form-label text-white">Catatan (Opsional)</label>
+                                <textarea class="form-control" id="catatan" name="catatan" rows="3"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ url_for('event_detail', event_id=event.id) }}" class="btn btn-secondary">Kembali</a>
+                            <button type="submit" class="btn btn-primary">Konfirmasi Pembelian</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById('jumlah_tiket_input').addEventListener('change', function() {
+    const jumlah = parseInt(this.value) || 1;
+    const harga = {{ event.harga }};
+    const total = jumlah * harga;
+    document.querySelector('.col-md-6:last-child p:nth-child(2)').textContent = 
+        'Total Harga: Rp ' + total.toLocaleString('id-ID', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+});
+</script>
+{% endblock %}
