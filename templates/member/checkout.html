@@ -73,7 +73,7 @@
 <script>
 document.getElementById('jumlah_tiket_input').addEventListener('change', function() {
     const jumlah = parseInt(this.value) || 1;
-    const harga = {{ event.harga }};
+    const harga = parseFloat("{{ event.harga }}");
     const total = jumlah * harga;
     document.querySelector('.col-md-6:last-child p:nth-child(2)').textContent = 
         'Total Harga: Rp ' + total.toLocaleString('id-ID', {minimumFractionDigits: 2, maximumFractionDigits: 2});
